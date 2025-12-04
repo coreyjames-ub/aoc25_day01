@@ -76,7 +76,7 @@ test3 = [
 
 txt = "5542145-5582046,243-401,884211-917063,1174-1665,767028-791710,308275-370459,285243789-285316649,3303028-3361832,793080-871112,82187-123398,7788-14096,21-34,33187450-33443224,2750031-2956556,19974-42168,37655953-37738891,1759-2640,55544-75026,9938140738-9938223673,965895186-966026269,502675-625082,11041548-11204207,1-20,3679-7591,8642243-8776142,40-88,2872703083-2872760877,532-998,211488-230593,3088932-3236371,442734-459620,8484829519-8484873271,5859767462-5859911897,9987328-10008767,656641-673714,262248430-262271846"
 
-txt2 = "11-22,95-115,998-1012,1188511880-1188511890,222220-222224,1698522-1698528,446443-446449,38593856-38593862"
+txt2 = "11-22,95-115,998-1012,1188511880-1188511890,222220-222224,1698522-1698528,446443-446449,38593856-38593862,565653-565659,824824821-824824827,2121212118-2121212124"
 
 def parse_ranges(txt):
     blocks = txt.split(",")
@@ -107,5 +107,51 @@ def find_dbl(data):
     for num in invalids:
         total += num
     return total
-# test5 = [(9, 22)]
-print(find_dbl(ranges))
+test5 = [(110, 113)]
+# print(find_dbl(ranges))
+
+def find_pat(data):
+    invalids = []
+    for pair in data:
+        for x in range(pair[0], pair[1]+1):
+            txt = str(x)
+            txt_len = len(txt)
+            if txt_len == 1:
+                continue
+            for y in range(1, txt_len+1):
+                if txt_len % y != 0 or y > txt_len / 2:
+                    continue
+                chunks = []
+                # prev = 0
+                # end = y
+                for z in range(0, txt_len, y):
+                    tmp = txt[z:z+y]
+                    chunks.append(tmp)
+                good = False
+                check = chunks[0]
+                for chunk in chunks:
+                    if check == chunk:
+                        good = True
+                    else:
+                        good = False
+                        break
+                if good == True:
+                    invalids.append(x)
+                    break
+            
+                    # prev = end
+                    # end = end + y
+                
+                    
+            
+            # half = len(txt) // 2
+            # beg = txt[:half]
+            # end = txt[half:]
+            # if beg == end:
+            #     invalids.append(x)
+    total = 0
+    for num in invalids:
+        total += num
+    return total
+
+print(find_pat(ranges))
